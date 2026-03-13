@@ -25,18 +25,21 @@ public class Main {
             if (h1 == null) {
                 result_queue.add(h2);
                 h2 = null;
-            } else if (h2 == null) {
+            } 
+            else if (h2 == null) {
                 result_queue.add(h1);
                 h1 = null;
-            } else {
+            }
+             else {
                 if (h1.getValue() <= h2.getValue()) {
                     result_queue.add(h1);
                     h1 = null;
-                } else {
+                }
+                 else {
                     result_queue.add(h2);
                     h2 = null;
                 }
-            }
+            } 
         }
 
         while (result_queue.getSize() > 0) {
