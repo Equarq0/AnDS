@@ -19,13 +19,16 @@ public class Main {
         // System.out.println(h);
 
         Tree<Integer> tree1 = new Tree<>();
-        tree1.add(10);
-        tree1.add(5);
-        tree1.add(15);
-        tree1.add(12);
-        tree1.add(13);
+        tree1.add(50);
+        tree1.add(30);
+        tree1.add(20);
+        tree1.add(40);
+        tree1.add(35);
+        tree1.add(38);
 
-        tree1.remove(15, tree1.getRoot());
+        tree1.inOrder(tree1.getRoot());
+
+        tree1.remove(30, tree1.getRoot());
         tree1.inOrder(tree1.getRoot());
      }
 }
