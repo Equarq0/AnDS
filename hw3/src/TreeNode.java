@@ -2,6 +2,7 @@ public class TreeNode<T> {
     private T value;
     private TreeNode<T> left;
     private TreeNode<T> right;
+    private TreeNode<T> parent;
 
     public TreeNode(T value) {
         this.value = value;
@@ -15,6 +16,7 @@ public class TreeNode<T> {
         this.value = value;
         this.left = left;
         this.right = right;
+        this.parent = parent;
     }
 
     public T getValue() {
@@ -40,6 +42,10 @@ public class TreeNode<T> {
     public void setRight(TreeNode<T> right) {
         this.right = right;
     }
+
+    public TreeNode<T> getParent() { return parent; }
+
+    public void setParent(TreeNode<T> parent) {this.parent = parent;}
 
     public boolean isLeaf() {
         return this.left == null && this.right == null;

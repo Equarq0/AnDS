@@ -38,12 +38,14 @@ public class Tree<T extends Comparable<T>> {
         if (current.getValue().compareTo(value) > 0) {
             if (current.getLeft() == null) {
                 current.setLeft(new TreeNode<>(value));
+                current.getLeft().setParent(current);
             } else {
                 add(current.getLeft(), value);
             }
         } else if (current.getValue().compareTo(value) <= 0) {
             if (current.getRight() == null) {
                 current.setRight(new TreeNode<>(value));
+                current.getRight().setParent(current);
             } else {
                 add(current.getRight(), value);
             }
@@ -92,9 +94,71 @@ public class Tree<T extends Comparable<T>> {
         return null;
     }
 
+    public T remove(T value, TreeNode<T> node) {
+        if (node == null) return null;
+        if (node.getValue().compareTo(value) == 0) {
+            if (node.getRight() != null) {
+                if (node.getRight().getLeft() == null) {
+                    TreeNode<T> aim = node;
+                    node = node.getParent();
+                    if (aim == node.getLeft()) node.setLeft(node.getLeft().getRight());
+                    else node.setRight(node.getRight().getRight());
+                }
+                else {
+                    TreeNode<T> replace_node = node;
+                    while (replace_node.getLeft() != null) {
+                        replace_node = replace_node.getLeft();
+                    }
+                    node.setValue(replace_node.getValue());
+                    replace_node = replace_node.getParent();
+                    if (replace_node.getRight() != null) {
+                        replace_node.setLeft(replace_node.getLeft().getRight());
+                    }
+                    else replace_node.setLeft(null);
+                }
+                return value;
+            }
+            else if(node.getLeft() != null) {
+                TreeNode<T> aim = node;
+                node = node.getParent();
+                if (aim == node.getLeft()) node.setLeft(node.getLeft().getLeft());
+                else node.setRight(node.getRight().getLeft());
+                return value;
+            }
+            else {
+                TreeNode<T> aim = node;
+                node = node.getParent();
+                if (aim == node.getLeft()) node.setLeft(null);
+                else node.setRight(null);
+                return value;
+            }
+        }
 
+        if (node.getValue().compareTo(value) > 0) {
+            return remove(value, node.getLeft());
+        }
+
+        if (node.getValue().compareTo(value) < 0) {
+            return remove(value, node.getRight());
+        }
+        return null;
+    }
 
     public TreeNode<T> getRoot() {
         return root;
+    }
+
+    public TreeNode<T> getParent(T value, TreeNode<T> node) {
+        if (node == null) return null;
+        if (node.getValue().compareTo(value) == 0) {
+            return node.getParent();
+        }
+        if (node.getValue().compareTo(value) > 0) {
+            return getParent(value, node.getLeft());
+        }
+        if (node.getValue().compareTo(value) < 0) {
+            return getParent(value, node.getRight());
+        }
+        return null;
     }
 }
