@@ -59,7 +59,6 @@ public class TopologicalSortAnalyse {
             }
         }
 
-        // Выключаем таймер
         long stopTime = System.nanoTime();
         long durationNano = (stopTime - startTime);
 
@@ -80,7 +79,6 @@ public class TopologicalSortAnalyse {
         // Вместо перебора всех пар, мы просто добавляем фиксированное число ребер для каждой вершины
         for (int i = 0; i < numVertices; i++) {
             for (int k = 0; k < edgesPerVertex; k++) {
-                // Ребро может идти только вперед (к вершине с большим индексом), чтобы не было циклов
                 if (i < numVertices - 1) {
                     int nextVertex = i + 1 + random.nextInt(numVertices - i - 1);
                     adjList.get(i).add(nextVertex);
@@ -98,7 +96,6 @@ public class TopologicalSortAnalyse {
         System.out.println("Vertices,Edges,Time(ns),Iterations");
 
         for (int i = 0; i < steps; i++) {
-            // Равномерно распределяем размеры от 100 до 10000
             int numVertices = minSize + (i * (maxSize - minSize) / (steps - 1));
 
             // Генерируем граф, где из каждой вершины гарантированно выходит по 3 ребра
@@ -109,12 +106,10 @@ public class TopologicalSortAnalyse {
             int numEdges = 0;
             for (List<Integer> list : graph) numEdges += list.size();
 
-            // Прогрев JVM (важно для точности наносекунд)
             if (i == 0) {
                 for (int k = 0; k < 10; k++) TopologicalSortAnalyse.topologicalSort(numVertices, graph);
             }
 
-            // Замер
             TopologicalSortAnalyse.Metrics metrics = TopologicalSortAnalyse.topologicalSort(numVertices, graph);
 
             System.out.println(numVertices + "," + numEdges + "," + metrics.durationNano + "," + metrics.iterations);
