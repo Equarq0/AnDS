@@ -22,7 +22,6 @@ public class TopologicalSortAnalyse {
     public static Metrics topologicalSort(int numVertices, List<List<Integer>> adjList) {
         long iterations = 0;
 
-        // Включаем таймер (Пункт 3.а)
         long startTime = System.nanoTime();
 
         // 1. Подсчет полустепени захода (in-degree) для каждой вершины
